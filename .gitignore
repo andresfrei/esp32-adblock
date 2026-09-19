@@ -10,3 +10,5 @@ src/secrets.h
 
 # Backups / scratch
 *.bak
+# Local Pi runtime state
+.atl/

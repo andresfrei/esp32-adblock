@@ -60,7 +60,9 @@ Printing notes:
 
 ## Build & flash (PlatformIO)
 
-One USB flash to get going — after that, **firmware and blocklist both update over WiFi** (see below).
+After an explicitly approved first flash, **firmware and blocklist both update over WiFi** (see below).
+
+For the provisional 16 MB ESP32-S3 N16R8 configuration, see [`docs/esp32-s3-n16r8.md`](docs/esp32-s3-n16r8.md). It preserves `[env:c3]`; bare `pio run` still builds C3.
 
 > ⚠️ Use a **current PlatformIO** — the VSCode PlatformIO extension's bundled core, or
 > `pip install -U platformio` in a venv. The distro/apt `platformio` package (e.g. 4.3.4) is
@@ -72,17 +74,30 @@ One USB flash to get going — after that, **firmware and blocklist both update 
 cp src/secrets.example.h src/secrets.h
 #    then edit src/secrets.h -> WIFI_SSID / WIFI_PASS
 
-# 2. build the blocklist hash table (default = StevenBlack base + Hagezi Light,
-#    ~140k domains, WhatsApp/social safe)
-python3 tools/build_blocklist.py data/blocklist.bin
+# 2. generate the initial bounded list and JSON evidence report
+python3 tools/build_blocklist.py data/blocklist.bin \
+  --max-domains 140000 --require-domain doubleclick.net \
+  --report docs/blocklist-build.json
 
-# 3. flash firmware + the blocklist filesystem (the one and only USB flash)
-pio run -t upload
-pio run -t uploadfs
+# 3. Build or upload only after confirming the target board and port.
+#    See the S3 runbook for destructive uploadfs and OTA boundaries.
+pio run -e c3
+pio run -e s3_n16r8
+# pio run -e s3_n16r8 -t upload --upload-port /dev/serial/by-id/<confirmed-board>
 
-# 4. watch it boot, note the IP / open the dashboard
+# 4. watch an approved device boot, note the IP / open the dashboard
 pio device monitor          # -> http://c3adblock.local
 ```
+
+The generator preserves the firmware's sorted five-byte little-endian FNV-1a40
+format, validates every required source independently, rejects HTML/error
+payloads, and records source/output hashes and explicit parser counters in
+[`docs/blocklist-build.json`](docs/blocklist-build.json). The current report
+contains 92,982 accepted unique domains; feed counts and digests are time-varying.
+The 140,000 value is a maximum only: the generator never pads the list or claims
+that the current download reaches the cap. See the full
+[`ESP32-S3 N16R8 operations runbook`](docs/esp32-s3-n16r8.md) before any upload.
+
 
 ### WiFi setup (no re-flash needed)
 
@@ -106,7 +121,10 @@ The dashboard at **http://c3adblock.local** does it all:
 
 **4 MB flash tradeoff:** firmware OTA needs *two* app slots, which leaves ~1.3 MB for the
 blocklist (**~250k domains max**). The aggressive 537k "ultimate" list only fits the
-single-app partition table (no firmware OTA). Pick your tradeoff in `partitions.csv`.
+single-app partition table (no firmware OTA). The S3 N16R8 build and its destructive
+filesystem-upload/normal-firmware-OTA boundaries are documented in
+[`docs/esp32-s3-n16r8.md`](docs/esp32-s3-n16r8.md). Pick your tradeoff in
+`partitions.csv`.
 
 ## Use it
 
