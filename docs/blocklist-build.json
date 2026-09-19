@@ -1,0 +1,87 @@
+{
+  "generated_at": "2026-09-19T05:46:38.509527Z",
+  "output": {
+    "domain_collision_count": 0,
+    "hash_bits": 40,
+    "hash_bytes": 5,
+    "sha256": "659c880f1a6c0b52e84b627205fafb7168e84a996cba496a6a42f57d57b9a905",
+    "size_bytes": 464910,
+    "unique_hash_count": 92982
+  },
+  "provenance": {
+    "download_evidence": "Source counts, timestamps, digests, and output identity below are from this local generation.",
+    "official_metadata": {
+      "modified": "18Sep2026 08:36UTC",
+      "note": "Official README/header metadata; not a recount of this download.",
+      "official_entry_count": 39661,
+      "readme_url": "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/README.md",
+      "syntax": "Domains without subdomains",
+      "title": "HaGeZi MultiLIGHT basic protection",
+      "version": "2026.0918.0836.15",
+      "wildcard_url": "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/light-onlydomains.txt"
+    }
+  },
+  "selection": {
+    "algorithm": "required domains first, then lexicographically sorted normalized domains",
+    "max_domains": 140000,
+    "note": "The cap is a maximum only. When truncated, this deterministic subset is not the complete current feed union; the list is never padded.",
+    "required_domains": [
+      "doubleclick.net"
+    ]
+  },
+  "sources": [
+    {
+      "accepted_record_count": 80169,
+      "candidate_record_count": 80176,
+      "comment_or_blank_count": 6805,
+      "content_sha256": "5c61b698d199d98125c2b6f232fdc7aef4b999d06f9f6d29e43eb59eb6867708",
+      "format": "hosts",
+      "normalized_domain_count": 57498,
+      "raw_line_count": 86988,
+      "rejected_record_count": 7,
+      "retrieved_at": "2026-09-19T05:46:37.975151Z",
+      "skipped_record_count": 6812,
+      "source": "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts",
+      "unsupported_exception_count": 0,
+      "unsupported_record_count": 7,
+      "unsupported_regex_count": 0,
+      "unsupported_syntax_count": 7,
+      "url": "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts",
+      "valid_source": true
+    },
+    {
+      "accepted_record_count": 39661,
+      "candidate_record_count": 39661,
+      "comment_or_blank_count": 13,
+      "content_sha256": "3f4e10a1484b68a69b50407ea56682ee9a3d7574586a93e0459fc4f6d5fbe525",
+      "format": "WildcardDomains (plain domains without subdomains)",
+      "normalized_domain_count": 39661,
+      "raw_line_count": 39674,
+      "rejected_record_count": 0,
+      "retrieved_at": "2026-09-19T05:46:38.260882Z",
+      "skipped_record_count": 13,
+      "source": "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/light-onlydomains.txt",
+      "unsupported_exception_count": 0,
+      "unsupported_record_count": 0,
+      "unsupported_regex_count": 0,
+      "unsupported_syntax_count": 0,
+      "url": "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/light-onlydomains.txt",
+      "valid_source": true
+    }
+  ],
+  "union": {
+    "accepted_record_count": 119830,
+    "normalized_domain_count": 92982,
+    "selected_domain_count": 92982,
+    "truncated": false
+  },
+  "validation": {
+    "all_sources_have_valid_domains": true,
+    "required_domains_present_in_union": {
+      "doubleclick.net": true
+    },
+    "required_domains_selected": {
+      "doubleclick.net": true
+    }
+  }
+}
